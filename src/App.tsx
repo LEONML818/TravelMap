@@ -69,7 +69,7 @@ function App() {
         showLoginButton={!isSupabaseConfigured || !isAuthenticated}
       />
       
-      <div className="flex-1 flex overflow-hidden">
+      <div className="flex-1 flex flex-col lg:flex-row overflow-hidden">
         <Sidebar
           cities={cities}
           allCities={allCities}
@@ -103,8 +103,8 @@ function App() {
           }}
         />
         
-        <main className="flex-1 relative overflow-hidden">
-          <div className="absolute inset-0 p-4 lg:p-6">
+        <main className="flex-1 relative overflow-hidden min-h-0">
+          <div className="absolute inset-0 p-2 sm:p-4 lg:p-6">
             <MapView 
               cities={cities} 
               onCityClick={handleCityClick}

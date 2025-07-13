@@ -100,17 +100,18 @@ export function Sidebar({
       
       {/* Sidebar */}
       <div className={`
-        fixed lg:relative top-0 left-0 h-full w-80 bg-white shadow-xl z-50
+        fixed lg:relative top-0 left-0 h-full w-80 bg-white shadow-xl z-[60]
         transform transition-transform duration-300 ease-in-out
         ${isOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
         flex flex-col
+        lg:min-h-0
       `}>
         {/* Profile & Stats Header */}
         <div className="bg-gradient-to-br from-blue-600 to-purple-700 text-white p-6">
           {/* Close button for mobile */}
           <button
             onClick={onClose}
-            className="lg:hidden absolute top-4 right-4 p-2 hover:bg-white/20 rounded-lg transition-colors"
+            className="lg:hidden absolute top-4 right-4 p-2 hover:bg-white/20 rounded-lg transition-colors z-10"
           >
             <X size={20} />
           </button>

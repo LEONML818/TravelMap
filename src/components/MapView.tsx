@@ -235,13 +235,13 @@ export const MapView: React.FC<MapViewProps> = ({
       
       {/* Dismissible Zoom Info */}
       {showZoomInfo && (
-        <div className="absolute top-4 left-4 z-[1000] bg-white/95 backdrop-blur-sm p-3 rounded-lg shadow-lg border border-blue-200">
+        <div className="absolute top-2 left-2 sm:top-4 sm:left-4 z-[50] bg-white/95 backdrop-blur-sm p-2 sm:p-3 rounded-lg shadow-lg border border-blue-200 max-w-[200px] sm:max-w-none">
           <div className="flex items-center justify-between gap-3">
-            <div className="flex items-center gap-2 text-sm">
+            <div className="flex items-center gap-2 text-xs sm:text-sm">
               <Info size={16} className="text-blue-500" />
               <div>
                 <div className="font-medium text-gray-900">{zoomInfo.level}</div>
-                <div className="text-gray-600 text-xs">{zoomInfo.cities}</div>
+                <div className="text-gray-600 text-xs hidden sm:block">{zoomInfo.cities}</div>
               </div>
             </div>
             <button
@@ -256,29 +256,34 @@ export const MapView: React.FC<MapViewProps> = ({
       )}
 
       {/* Filter Toggle */}
-      <div className="absolute top-4 left-1/2 transform -translate-x-1/2 z-[1000]">
+      <div className="absolute top-2 left-1/2 transform -translate-x-1/2 z-[50] sm:top-4">
         <button
           onClick={() => onFilterChange(!showOnlyVisited)}
-          className={`flex items-center gap-2 px-4 py-2 rounded-full font-medium text-sm transition-all duration-200 shadow-lg ${
+          className={`flex items-center gap-1 sm:gap-2 px-2 sm:px-4 py-1 sm:py-2 rounded-full font-medium text-xs sm:text-sm transition-all duration-200 shadow-lg ${
             showOnlyVisited
               ? 'bg-gradient-to-r from-emerald-500 to-green-500 text-white'
               : 'bg-white/95 backdrop-blur-sm text-gray-700 border border-gray-200 hover:bg-gray-50'
           }`}
         >
-          {showOnlyVisited ? <Eye size={16} /> : <EyeOff size={16} />}
-          {showOnlyVisited ? 'Showing visited only' : 'Show all cities'}
-          <span className="text-xs opacity-75">
+          {showOnlyVisited ? <Eye size={14} /> : <EyeOff size={14} />}
+          <span className="hidden sm:inline">
+            {showOnlyVisited ? 'Showing visited only' : 'Show all cities'}
+          </span>
+          <span className="sm:hidden">
+            {showOnlyVisited ? 'Visited' : 'All'}
+          </span>
+          <span className="text-xs opacity-75 hidden sm:inline">
             ({showOnlyVisited ? displayedCities.length : cities.length})
           </span>
         </button>
       </div>
 
       {/* Add City Mode Toggle */}
-      <div className="absolute top-4 right-4 z-[1000]">
+      <div className="absolute top-2 right-2 sm:top-4 sm:right-4 z-[50]">
         <button
           onClick={() => setAddMode(!addMode)}
           disabled={isAddingCity}
-          className={`px-4 py-2 rounded-full font-medium text-sm transition-all duration-200 shadow-lg flex items-center gap-2 ${
+          className={`px-2 sm:px-4 py-1 sm:py-2 rounded-full font-medium text-xs sm:text-sm transition-all duration-200 shadow-lg flex items-center gap-1 sm:gap-2 ${
             addMode
               ? 'bg-gradient-to-r from-red-500 to-pink-500 text-white hover:from-red-600 hover:to-pink-600'
               : 'bg-gradient-to-r from-purple-500 to-blue-500 text-white hover:from-purple-600 hover:to-blue-600'
@@ -286,17 +291,19 @@ export const MapView: React.FC<MapViewProps> = ({
         >
           {isAddingCity ? (
             <>
-              <Loader2 size={16} className="animate-spin" />
-              Adding...
+              <Loader2 size={14} className="animate-spin" />
+              <span className="hidden sm:inline">Adding...</span>
             </>
           ) : addMode ? (
             <>
-              ❌ Cancel
+              <span className="sm:hidden">❌</span>
+              <span className="hidden sm:inline">❌ Cancel</span>
             </>
           ) : (
             <>
-              <Plus size={16} />
-              Add City
+              <Plus size={14} />
+              <span className="hidden sm:inline">Add City</span>
+              <span className="sm:hidden">Add</span>
             </>
           )}
         </button>
@@ -304,13 +311,14 @@ export const MapView: React.FC<MapViewProps> = ({
 
       {/* Instructions when in add mode */}
       {addMode && (
-        <div className="absolute top-16 right-4 z-[1000] bg-white/95 backdrop-blur-sm p-3 rounded-lg shadow-lg border border-purple-200 max-w-xs">
-          <div className="text-sm text-gray-700">
+        <div className="absolute top-12 right-2 sm:top-16 sm:right-4 z-[50] bg-white/95 backdrop-blur-sm p-2 sm:p-3 rounded-lg shadow-lg border border-purple-200 max-w-[250px] sm:max-w-xs">
+          <div className="text-xs sm:text-sm text-gray-700">
             <div className="flex items-center gap-2 mb-1">
               <span className="text-purple-500">📍</span>
               <span className="font-medium">Add Custom City</span>
             </div>
-            <p>Click anywhere on the map to add a new city to your collection!</p>
+            <p className="hidden sm:block">Click anywhere on the map to add a new city to your collection!</p>
+            <p className="sm:hidden">Tap map to add city</p>
           </div>
         </div>
       )}
@@ -318,7 +326,7 @@ export const MapView: React.FC<MapViewProps> = ({
       <MapContainer
         center={[20, 0]}
         zoom={2}
-        className="h-full w-full rounded-lg z-0"
+        className="h-full w-full rounded-lg z-0 touch-auto"
         zoomControl={false}
         style={{ cursor: addMode ? 'crosshair' : 'grab' }}
       >
